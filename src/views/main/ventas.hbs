@@ -1,0 +1,164 @@
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<div class="text-center m-2 p-2">
+  <h1>Ventas</h1>
+</div>
+<div class="container">
+  <div class="row">
+
+
+
+    <div class="col-md-6 ">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio </th>
+            <th scope="col">Tipo de Producto</th>
+            <th scope="col">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {{#each inventario}}
+
+
+
+          <tr>
+
+            <th>{{producto}}</th>
+            <td>${{precioPorUnidad}}</td>
+            <td>{{tipoDeProducto}}</td>
+            <td id="productos"></td>
+
+            {{!-- BOTON DE AGREGAR --}}
+            <td> <button id="{{id}}" class="btn btn-info"
+                onclick="  agregarObjectoAHolder({{json this}})">AGREGAR</button></a> </td>
+            {{!-- BOTON DE RESTAR --}}
+
+            <td> <button class="btn btn-primary" onclick=" deleteThis(arr, {{json this.id}})">RESTAR</button> </td>
+
+          </tr>
+          {{/each}}
+        </tbody>
+
+      </table>
+    </div>
+
+
+    <div class="col-md-6 text-center">
+      <div class="card">
+        <div class="card-body">
+          <form action="/venta" method="post">
+
+            <div class="form-group">
+
+            </div>
+            <div class="form-group">
+              {{!-- Hacer que la suma de los precios de los productos aparezca despues del h6 --}}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio </th>
+                    <th scope="col">Tipo de Producto</th>
+                    <th scope="col">Tipo de Pago</th>
+                  </tr>
+                </thead>
+                <tbody id="holderDeVenta">
+
+
+                </tbody>
+
+              </table>
+              <h6>Cantidad total: <h6 id="cantidadTotal">
+
+                  0
+
+                </h6>
+              </h6>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success" onclick="sendPostVenta()"> Vender</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<script>
+
+  var num = 0;
+  var times = 0;
+  var arr = [];
+
+
+
+
+  function sendPostVenta() {
+    //obtener valores de mi tabla
+
+    var data = {};
+    data.sumaDeLaVenta = $("#cantidadTotal");
+    data.objetosVendidos = arr;
+    console.log(data)
+
+    $.ajax({
+      type: 'POST',
+      data: data,
+      contentType: "application/json",
+      dataType: 'json',
+      url: '/venta',
+      success: function (data) {
+        console.log('success');
+        console.log(data);
+      },
+      error: function (error) {
+        console.log("some error in fetching the notifications");
+      }
+    });
+
+
+
+
+
+  }
+  function agregarObjectoAHolder(obj) {
+    arr.push(obj)
+    document.getElementById("holderDeVenta").innerHTML += `
+   
+       <td> ${obj.producto} </td>
+       
+   
+       <td> ${obj.precioPorUnidad} </td>
+       <td> ${obj.tipoDeProducto} </td>
+       `
+
+
+    var cantidadTotal = document.getElementById("cantidadTotal").outerText
+    //convertir cantidad total a decimal de dos digitos 
+    var cantidadTotalInt = parseFloat(cantidadTotal);
+
+    //convertir precio a decimal de dos digitos
+    var precioFloat = parseFloat(obj.precioPorUnidad);
+
+    //agregar la suma de lo que habia y lo agregado a cantidad total
+    var sum = precioFloat + cantidadTotalInt;
+    document.getElementById("cantidadTotal").innerHTML = sum
+
+    console.log(arr)
+
+
+  }
+  function deleteThis(arr, id) {
+    arr.splice(arr.findIndex(function (i) {
+      return i.id === id;
+    }), 1);
+    console.log(arr);
+
+    document.getElementById(`${id}`).innerHTML += ` `
+  }
+</script>

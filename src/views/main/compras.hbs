@@ -1,0 +1,24 @@
+<div class="text-center"><h1>Compras</h1></div>
+
+  <div class="col-md-4 mx-auto">
+<div class="card">
+    <div class="card-body">
+            <form action="/links/add" method="post">
+                    <div class="form-group">
+                        {{!-- hacer que sea un dropdown menu con solo lo que hay en el inventario --}}
+                    <input type="text" class="form-control" autofocus name="productos" placeholder="Producto">
+                    </div>
+                    <div class="form-group">
+                        {{!-- hacer que sea estrictamente numeros --}}
+                    <input type="url" class="form-control"  name="cantidad" placeholder="Cantidad">
+                    </div>
+                    <div class="form-group">
+                        {{!-- Hacer que la suma de los precios de los productos aparezca despues del h6 --}}
+                    <h6>Cantidad total:</h6>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success"> Compra</button>
+                           <button class="btn btn-primary"> Editar</button>
+    </div>
+</div>
+</div>

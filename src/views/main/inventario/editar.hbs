@@ -1,0 +1,53 @@
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <a class="nav-link" href="/inventario">Ver Productos<span class="sr-only">(current)</span></a>
+      </li>
+ 
+     
+ 
+
+    </ul>
+
+  </div>
+</nav>
+
+<div class="text-center"><h1>Producto Nuevo</h1></div>
+
+  <div class="col-md-4 mx-auto">
+<div class="card">
+    <div class="card-body">
+            <form action="/inventario/editar/{{inventario.id}}" method="post">
+                    <div class="form-group">
+                        {{!-- hacer que sea un dropdown menu con solo lo que hay en el inventario --}}
+                    <input type="text" class="form-control" autofocus name="producto" placeholder="Producto">
+                    </div>
+                         <div class="form-group">
+                        <input type="number" name="precioPorUnidad"  min="0"placeholder="Precio por Unidad o Kilo">
+                    </div>
+                    <div class="form-group">
+                        {{!-- hacer que sea estrictamente numeros --}}
+          
+    <select class="custom-select"  name="tipoDeProducto" >
+    <option value="Pesado" name="pesado">Pesado</option>
+    <option value="Unidad" name="unidad">Unidad</option>
+  </select> 
+                    </div>
+               
+               <div class="form-group">
+                   <textarea type="text" name="descripcion" placeholder="Descripción (opcional)"> </textarea>
+               </div>
+                 
+                    <div class="form-group">
+                        <button class="btn btn-success" type="submit"> Agregar</button>
+                           
+    </div>
+    </form>
+</div>
+</div>
